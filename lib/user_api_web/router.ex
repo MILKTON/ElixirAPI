@@ -14,9 +14,9 @@ defmodule UserApiWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api/v1/", UserApiWeb do
-    pipe_through :browser # Use the default browser stack
-    resources "users/", UserController, only: [:index, :show, :create]
+  scope "/api/v1", UserApiWeb do
+    pipe_through :api # Use the default browser stack
+    resources "/users", UserController, only: [:index, :show, :create]
     #get "/", PageController, :index
   end
 
