@@ -8,8 +8,12 @@ defmodule UserApiWeb.UserController do
     #todas las funciones del router recibira estos 2 parametros
   end
 
-  def show(conn, _params) do
-    case UserApi.User.search(1) do
+  def show(conn, %{"id" => user_id}) do #pattern matching a nivel de parametro, llegara un mapa con un id y se asigna al user ID
+    IO.inspect(self()) #Proceess id de donde esta corriendo esto, devuelve en que proceso estoy
+    #Todo codigo de elixir corre dentro de un proceso, SIN EXCEPCION
+    #Por cada peticion me da una conexion diferente
+    #IO.inspect(params)
+    case UserApi.User.search(user_id) do
       nil ->
         conn
         |> put_status(404)
@@ -25,6 +29,18 @@ defmodule UserApiWeb.UserController do
   end
 
   def create(conn, _params) do
+    changeset = UserApi.User.create_changeset(%UserApi.User{}, params)
+    case changeset.valid? do
+      true ->
+        user = UserApi.Repo.insert!(changeset) # ! si changeset falla, mandara una EXCEPCION
+        conn
+        |> put_status(200)
+        |> text("Elemento insertado")
+      false ->
+        |>put_status(400)
+        |>text("Error en los datos")
+    end
+
     conn
     |> put_status(401)
     |> text("Create")
