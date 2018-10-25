@@ -29,7 +29,9 @@ defmodule UserApi.User do
             where: u.id == ^user_id,
             select: u
       )
-    UserApi.Repo.one(query)   #Aqui se hace la query, se pide solo uno
+    UserApi.Repo.one(query)   # Aqui se hace la query, se pide solo uno
+    # One se encarga de que el query devuelva un unico elemento
+    # one! mata el proceso y regresa un 500
   end
 
   def search_all do
@@ -37,7 +39,7 @@ defmodule UserApi.User do
       from(u in UserApi.User,
             select: [u.name, u.age]
       )
-    UserApi.Repo.all(query)   #Aqui se hace la query, se pide todo
+    UserApi.Repo.all(query)   # Aqui se hace la query, se pide todo
   end
 
 end

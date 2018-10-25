@@ -2,9 +2,11 @@ defmodule UserApiWeb.UserController do
   use UserApiWeb, :controller
 
   def index(conn, _params) do #primer parametro la conexion
+    users = UserApi.User.search_all() # Devuelve una lista de mapas
     conn
     |> put_status(401)
-    |> text("Index")
+    |> json(users)
+    # |> text("Index")
     #todas las funciones del router recibira estos 2 parametros
   end
 
