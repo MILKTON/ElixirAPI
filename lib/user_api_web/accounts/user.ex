@@ -16,6 +16,7 @@ defmodule UserApi.User do
   # atributos a los que quiero que asigne valor que datos quiero extraer de lo que me mandan
   # se asignan correctamente a la estrucutura
   # Validate: marca error si no viene nombre, edad o ambos.
+  #
   def create_changeset( user = %UserApi.User{}, params) do
     user
     |> cast(params, [:name, :age, :company])
@@ -30,4 +31,13 @@ defmodule UserApi.User do
       )
     UserApi.Repo.one(query)   #Aqui se hace la query, se pide solo uno
   end
+
+  def search_all do
+    query =
+      from(u in UserApi.User,
+            select: [u.name, u.age]
+      )
+    UserApi.Repo.all(query)   #Aqui se hace la query, se pide todo
+  end
+
 end
