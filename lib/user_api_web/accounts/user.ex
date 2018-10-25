@@ -12,7 +12,7 @@ defmodule UserApi.User do
   end
 
   # Se llamara desde el controlador, se asociara a user con binding, se recibiran los parametros
-  # A la estrucutura vacia se le pasa por la funcion cast que recibira: estructura vacia, datos y
+  # A la estructura vacia se le pasa por la funcion cast que recibira: estructura vacia, datos y
   # atributos a los que quiero que asigne valor que datos quiero extraer de lo que me mandan
   # se asignan correctamente a la estrucutura
   # Validate: marca error si no viene nombre, edad o ambos.

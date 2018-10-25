@@ -28,8 +28,9 @@ defmodule UserApiWeb.UserController do
     #|> text("Show")
   end
 
-  def create(conn, _params) do
+  def create(conn, params) do
     changeset = UserApi.User.create_changeset(%UserApi.User{}, params)
+    IO.inspect(changeset)
     case changeset.valid? do
       true ->
         user = UserApi.Repo.insert!(changeset) # ! si changeset falla, mandara una EXCEPCION
@@ -37,8 +38,9 @@ defmodule UserApiWeb.UserController do
         |> put_status(200)
         |> text("Elemento insertado")
       false ->
-        |>put_status(400)
-        |>text("Error en los datos")
+        conn
+        |> put_status(400)
+        |> text("Error en los datos")
     end
 
     conn
